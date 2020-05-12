@@ -9,8 +9,9 @@ help:
 	@echo "Targets:"
 	@echo "  clean:  Removes distribution folders and artifacts from building"
 	@echo "  build:  Builds source and (universal) wheel distributions"
-	@echo "  upload: Uploads built source and wheel distributions to devpi"
-	@echo "          Requires env var `DEVPI_ROOT_PASSWORD`"
+	@echo "  test:   Runs pytest against source files in virtual environment"
+	@echo "  upload: Uploads built source and wheel distributions to repository"
+	@echo "          Requires env vars `REPO`, `USER`, `PASSWORD`"
 
 .PHONEY: clean
 clean:
