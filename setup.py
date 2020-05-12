@@ -7,16 +7,14 @@ with open("README.md") as fp:
 
 setup(
     name='TLE-tools',
-    version='0.2.1',
+    version='0.3.1',
     description='Library to work with two-line element set files',
     license='MIT',
-    author='Federico Stra',
-    author_email='stra.federico@gmail.com',
-    url='https://federicostra.github.io/tletools',
+    author='Spire SOS Team',
+    author_email='sos@spire.com',
     project_urls={
-        'Documentation': 'https://tletools.readthedocs.io',
-        'Code': 'https://github.com/FedericoStra/tletools',
-        'Issue tracker': 'https://github.com/FedericoStra/tletools/issues',
+        'Code': 'https://github.com/nsat/tletools',
+        'Issue tracker': 'https://github.com/nsat/tletools/issues',
     },
     packages=find_packages(include='tletools.*'),
     python_requires='>=3.4',
