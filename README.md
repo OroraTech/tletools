@@ -8,6 +8,11 @@
 `TLE-tools` is a small library to work with [two-line element
 set](https://en.wikipedia.org/wiki/Two-line_element_set) files.
 
+## Fork
+
+This repository is a fork of
+[FedericoStra/tletools](https://github.com/FedericoStra/tletools).
+
 ## Purpose
 
 The purpose of the library is to parse TLE sets into convenient `TLE` objects,
