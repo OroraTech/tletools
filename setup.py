@@ -7,7 +7,7 @@ with open("README.md") as fp:
 
 setup(
     name='TLE-tools',
-    version='0.3.2',
+    version='1.0.0',
     description='Library to work with two-line element set files',
     license='MIT',
     author='Spire SOS Team',
@@ -23,7 +23,6 @@ setup(
         'numpy>=1.16.0',
         'pandas>=0.24.0',
         'astropy>=3.2.0',
-        'poliastro>=0.12.0',
     ],
     tests_require=[
         'flake8>=3.7.0',
@@ -65,6 +64,8 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Scientific/Engineering',

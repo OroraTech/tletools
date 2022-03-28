@@ -12,10 +12,6 @@ def test_from_lines_with_units(tle_lines):
     assert isinstance(t, TLEu)
 
 
-def test_to_orbit(tle):
-    assert tle.to_orbit().ecc == tle.ecc
-
-
 def test_asdict(tle):
     assert type(tle)(**tle.asdict()) == tle
 

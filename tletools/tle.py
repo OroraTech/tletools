@@ -28,11 +28,6 @@ import numpy as np
 import astropy.units as u
 from astropy.time import Time
 
-# Maybe remove them from here?
-from poliastro.core.angles import E_to_nu as _E_to_nu, M_to_E as _M_to_E
-from poliastro.twobody import Orbit as _Orbit
-from poliastro.bodies import Earth as _Earth
-
 from .utils import partition, rev as u_rev
 
 
@@ -150,21 +145,6 @@ class TLE:
             self._epoch = Time(year + day, format='datetime64', scale='utc')
         return self._epoch
 
-    @property
-    def a(self):
-        """Semi-major axis."""
-        if self._epoch is None:
-            self._a = (_Earth.k.value / (self.n * np.pi / 43200) ** 2) ** (1/3) / 1000
-        return self._a
-
-    @property
-    def nu(self):
-        """True anomaly."""
-        if self._nu is None:
-            M = self.M * DEG2RAD
-            self._nu = _E_to_nu(_M_to_E(M, self.ecc), self.ecc) * RAD2DEG
-        return self._nu
-
     @classmethod
     def from_lines(cls, name, line1, line2):
         """Parse a TLE from its constituent lines.
@@ -206,26 +186,6 @@ class TLE:
         """Load multiple TLEs from a string."""
         return [cls.from_lines(*l012) for l012 in partition(string.split('\n'), 3)]
 
-    def to_orbit(self, attractor=_Earth):
-        '''Convert to a :class:`poliastro.twobody.orbit.Orbit` around the attractor.
-
-        >>> tle_string = """ISS (ZARYA)
-        ... 1 25544U 98067A   19249.04864348  .00001909  00000-0  40858-4 0  9990
-        ... 2 25544  51.6464 320.1755 0007999  10.9066  53.2893 15.50437522187805"""
-        >>> tle = TLE.from_lines(*tle_string.splitlines())
-        >>> tle.to_orbit()
-        6788 x 6799 km x 51.6 deg (GCRS) orbit around Earth (♁) at epoch 2019-09-06T01:10:02.796672000 (UTC)
-        '''
-        return _Orbit.from_classical(
-            attractor=attractor,
-            a=u.Quantity(self.a, u.km),
-            ecc=u.Quantity(self.ecc, u.one),
-            inc=u.Quantity(self.inc, u.deg),
-            raan=u.Quantity(self.raan, u.deg),
-            argp=u.Quantity(self.argp, u.deg),
-            nu=u.Quantity(self.nu, u.deg),
-            epoch=self.epoch)
-
     def astuple(self):
         """Return a tuple of the attributes."""
         return attr.astuple(self)
@@ -233,8 +193,6 @@ class TLE:
     def asdict(self, computed=False, epoch=False):
         """Return a dict of the attributes."""
         d = attr.asdict(self)
-        if computed:
-            d.update(a=self.a, nu=self.nu)
         if epoch:
             d.update(epoch=self.epoch)
         return d
@@ -251,21 +209,6 @@ class TLEu(TLE):
     (:class:`astropy.units.Quantity`), a type able to represent a value with
     an associated unit taken from :mod:`astropy.units`.
     """
-
-    @property
-    def a(self):
-        """Semi-major axis."""
-        if self._epoch is None:
-            self._a = (_Earth.k.value / self.n.to_value(u.rad/u.s) ** 2) ** (1/3) * u.m
-        return self._a
-
-    @property
-    def nu(self):
-        """True anomaly."""
-        if self._nu is None:
-            nu_rad = _M_to_nu(self.M.to_value(u.rad), self.ecc.to_value(u.one))
-            self._nu = nu_rad * RAD2DEG * u.deg
-        return self._nu
 
     @classmethod
     def from_lines(cls, name, line1, line2):
@@ -288,15 +231,3 @@ class TLEu(TLE):
             M=u.Quantity(float(line2[43:51]), u.deg),
             n=u.Quantity(float(line2[52:63]), u_rev / u.day),
             rev_num=line2[63:68])
-
-    def to_orbit(self, attractor=_Earth):
-        """Convert to an orbit around the attractor."""
-        return _Orbit.from_classical(
-            attractor=attractor,
-            a=self.a,
-            ecc=self.ecc,
-            inc=self.inc,
-            raan=self.raan,
-            argp=self.argp,
-            nu=self.nu,
-            epoch=self.epoch)

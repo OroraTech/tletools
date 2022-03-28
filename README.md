@@ -16,8 +16,7 @@ This repository is a fork of
 ## Purpose
 
 The purpose of the library is to parse TLE sets into convenient `TLE` objects,
-load entire TLE set files into `pandas.DataFrame`'s, convert `TLE` objects into
-`poliastro.twobody.Orbit`'s, and more.
+load entire TLE set files into `pandas.DataFrame`'s, and more.
 
 From [Wikipedia](https://en.wikipedia.org/wiki/Two-line_element_set):
 
