@@ -22,7 +22,7 @@ setup(
         'attrs>=19.0.0',
         'numpy>=1.16.0',
         'pandas>=0.24.0',
-        'astropy>=3.2.0',
+        'astropy>=7.0.1',
     ],
     tests_require=[
         'flake8>=3.7.0',
