@@ -7,7 +7,7 @@ with open("README.md") as fp:
 
 setup(
     name='TLE-tools',
-    version='1.0.0',
+    version='1.0.1',
     description='Library to work with two-line element set files',
     license='MIT',
     author='Spire SOS Team',
